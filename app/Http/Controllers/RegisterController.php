@@ -58,9 +58,31 @@ class RegisterController extends BaseController
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+         $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:1|max:100',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+            'roleID' => 'required',
+            'status' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());       
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+        return response()->json([
+            'success' => true, 
+            'message' => 'User Created successfully',
+            'data' => $user
+        ], 
+        200);   
     }
 
     /**
@@ -92,7 +114,30 @@ class RegisterController extends BaseController
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $user = User::find($id);
+       // Access and prepare data from the request
+        $data = $request->all();
+        //for password update handling
+        if(!empty($data['password'])){
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        $updated = User::where('id', $id)->update($data);
+
+        if ($updated) {
+            return response()->json([
+                'success' => true,
+                'message' => 'User Data updated successfully.',
+                'data' => $data
+            ], 200);
+        } else {
+            // Handle update failure (e.g., log the error or return a specific error message)
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update userDetails.'
+            ], 500);
+        }
     }
 
     /**
@@ -101,5 +146,17 @@ class RegisterController extends BaseController
     public function destroy(string $id)
     {
         //
+    }
+
+    public function userDetails(Request $user)
+    {
+         $user = User::where('id',$user->id)->get();
+
+         return response()->json([
+            'success' => true, 
+            'message' => 'User Details',
+            'data' => $user
+        ], 
+        200);
     }
 }
