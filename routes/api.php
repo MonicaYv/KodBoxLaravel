@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 
@@ -14,6 +16,7 @@ Route::controller(RegisterController::class)->group(function(){
     Route::post('login', 'login');
     Route::post('update/{id}','update');
     Route::post('createUser', 'create');
+    Route::post('remember', 'rememberMe');
 
 });
 

@@ -163,4 +163,30 @@ class RegisterController extends BaseController
         ], 
         200);
     }
+
+    public function rememberMe(Request $request)
+    {
+        $credentials = $request->only('name', 'password');
+        $remember = $request->has('remember_token'); // Check if "Remember Me" is checked
+
+        if (Auth::attempt($credentials, $remember)) {
+            // Authentication passed
+            //return redirect()->intended('/dashboard');
+             $user = Auth::user(); 
+                return response()->json([
+                    'success' => true, 
+                    'message' => 'User Remembered ',
+                    'data' => $user
+                    ], 
+                    200);
+        }else{
+
+             return response()->json([
+                'success' => false,
+                'message' => 'User not Remembered ',
+                'data'   => 'Not Found'
+            ], 500);
+
+        }
+    }
 }
