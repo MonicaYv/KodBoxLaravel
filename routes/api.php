@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -31,6 +32,13 @@ Route::middleware('auth:sanctum')->group( function () {
 	Route::post('apps-update/{id}', [LightAppController::class, 'update']);
 	Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
 	Route::get('users_details/{id}', [RegisterController::class, 'userDetails']);
+
+   //Roles routes
+	Route::get('role-list', [RolesController::class, 'index']);
+	Route::get('role-list/{id}', [RolesController::class, 'index']);
+	Route::post('role-create', [RolesController::class, 'create']);
+	Route::post('role-update/{id}', [RolesController::class, 'update']);
+	Route::get('role-delete/{id}', [RolesController::class, 'destroy']);
 
 });
 
