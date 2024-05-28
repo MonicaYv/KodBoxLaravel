@@ -8,12 +8,14 @@ use App\Http\Controllers\LightAppController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+      return redirect(route('login'));
 });
+
+
 
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//Route::get('users_details/{id}', [App\Http\Controllers\Auth\LoginController::class, 'userDetails']);
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
