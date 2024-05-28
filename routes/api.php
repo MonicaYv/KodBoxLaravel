@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -32,6 +33,12 @@ Route::middleware('auth:sanctum')->group( function () {
 	Route::post('role-create', [RolesController::class, 'create']);
 	Route::post('role-update/{id}', [RolesController::class, 'update']);
 	Route::get('role-delete/{id}', [RolesController::class, 'destroy']);
+  //Permissions routes
+	Route::get('permissions-list', [PermissionsController::class, 'index']);
+	Route::get('permissions-list/{id}', [PermissionsController::class, 'index']);
+	Route::post('permission-create', [PermissionsController::class, 'create']);
+	Route::post('permission-update/{id}', [PermissionsController::class, 'update']);
+	Route::get('permission-delete/{id}', [PermissionsController::class, 'destroy']);
 
 
 
