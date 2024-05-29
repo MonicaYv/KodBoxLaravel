@@ -1,0 +1,28 @@
+.file-container{
+  height: calc(100vh - 60px);
+  background-image: url("/images/Rectanglebg.png");
+}
+
+.content-container{
+  height: calc(100% - 80px);
+}
+
+.sidebar{
+  background-image: url("/images//sidebarimg.png");
+}
+
+.sidebar h1{
+  color: gray;
+}
+
+.yellowbar{
+  background-image: url("/images/Yellowbar.png");
+}
+
+.content-showing .content{
+  height: calc(100% - 64px);
+}
+
+#searchicon{
+  right: 40px;
+}

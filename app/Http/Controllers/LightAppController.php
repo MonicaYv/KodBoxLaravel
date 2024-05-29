@@ -16,14 +16,10 @@ class LightAppController extends Controller
      */
     public function index()
     {
+       
        $app = LiteAppModel::get();
 
-        return response()->json([
-            'success' => true, 
-            'message' => 'All Apps List',
-            'data' => $app
-        ], 
-        200);
+       return view('front.home', compact('app'));
     }
 
 
@@ -44,9 +40,10 @@ class LightAppController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function add_form()
     {
-        //
+        dd('asas');
+        return view('lightApp.home', compact('courses'));
     }
 
     /**
