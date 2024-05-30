@@ -241,7 +241,7 @@
         "id":2,
         "name":"Light App",
         "image":"{{ asset('images/lightapp.png') }}",
-        "url":"{{url('/add-form')}}"
+        "url":"{{url('/list')}}"
       },{
         "id":3,
         "name":"My Albums",

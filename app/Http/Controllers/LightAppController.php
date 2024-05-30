@@ -19,7 +19,8 @@ class LightAppController extends Controller
        
        $app = LiteAppModel::get();
 
-       return view('front.home', compact('app'));
+       return view('lightApp.list', compact('app'));
+
     }
 
 
@@ -42,16 +43,17 @@ class LightAppController extends Controller
      */
     public function add_form()
     {
-        dd('asas');
-        return view('lightApp.home', compact('courses'));
+       
+        return view('lightApp.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function add_data(Request $request)
     {
-     // dd($request->all()); 
+
+     
          $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:1|max:100',
             'website_link' => 'required|string|min:1|max:100',
@@ -93,7 +95,7 @@ class LightAppController extends Controller
 
         $appData = LiteAppModel::create($data);
 
-        return response()->json(['message' => 'App data stored successfully', 'data' => $appData], 201);
+       return view('lightApp.list');
     }
 
     /**

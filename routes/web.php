@@ -22,6 +22,7 @@ Auth::routes();
     
     Route::get('list', [LightAppController::class, 'index']);
     Route::get('add-form', [LightAppController::class, 'add_form']);
+    Route::post('submit', [LightAppController::class, 'add_data']);
 	Route::get('app_role_list', [LightAppController::class, 'AppRoleList']);
 	Route::post('apps-update/{id}', [LightAppController::class, 'update']);
 	Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
