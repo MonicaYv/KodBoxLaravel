@@ -91,7 +91,7 @@
                 </li>
                 <li class="flex items-center gap-5 mb-4">
                   <i class="ri-user-line"></i>
-                  <a href="#">User manage</a>
+                  <a href="{{ route('users') }}">User manage</a>
                 </li>
                 <li class="flex items-center gap-5 mb-4">
                   <i class="ri-apps-fill"></i>
@@ -228,6 +228,16 @@
       footerButton.addEventListener("mouseleave", function () {
         tooltip.style.display = "none";
       });
+      
+      //for dimissing toast
+       document.querySelectorAll('[data-dismiss-target]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var target = document.querySelector(button.getAttribute('data-dismiss-target'));
+            if (target) {
+                target.style.display = 'none';
+            }
+        });
+    });
 
         const container = document.querySelector(".desktop-apps");
       const Desktopapps = [
@@ -306,6 +316,8 @@
     container.innerHTML = Showapps
 
 
+
+      
     </script>
   </body>
 </html>
