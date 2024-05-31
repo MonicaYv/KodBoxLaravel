@@ -10,30 +10,36 @@ use Illuminate\Http\JsonResponse;
 
 class PermissionsController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
  /**
      * Display a listing of the roles.
      */
     public function index($id ='')
     {
        if($id){
-        $role = Permissions::find($id);
-        return response()->json([
-                'success' => true, 
-                'message' => 'Permission List',
-                'data' => $role
-            ], 
-            200);
+        $permission = Permissions::find($id);
+        return view('permissions.index',compact('permission'));
 
        }else{
-           $roles = Permissions::get();
-
-            return response()->json([
-                'success' => true, 
-                'message' => 'Permission List',
-                'data' => $roles
-            ], 
-            200);
+           $permissions = Permissions::get();
+           return view('permissions.index',compact('permissions'));
         }
+    }
+
+    public function permissions()
+    {
+        $permissions = Permissions::get();
+        $permissions = json_encode($permissions);
+        return view('permissions.permissions',compact('permissions'));
+    }
+
+    public function add()
+    {
+       return view('permissions.add');
     }
 
     public function create(Request $request)
@@ -41,6 +47,7 @@ class PermissionsController extends Controller
 
          $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'permissions' => 'required',
         ]);
 
         if($validator->fails()){
@@ -48,36 +55,32 @@ class PermissionsController extends Controller
         }
 
         $input = $request->all();
+        $input['permissions'] = implode(',', $input['permissions']);
         $role = Permissions::create($input);
-        return response()->json([
-            'success' => true, 
-            'message' => 'Permission Created successfully',
-            'data' => $role
-        ], 
-        200);   
+        return redirect()->route('permissions');  
+    }
+
+     public function edit(string $id)
+    {
+       $permission = Permissions::find($id);
+       $permission->permissions = explode(",", $permission->permissions);
+       return view('Permissions.edit',compact('permission'));
     }
 
      public function update(Request $request, string $id)
     {
 
        // Access and prepare data from the request
-        $data = $request->all();
-
+        $data = request()->except(['_token']);
+        $data['permissions'] = implode(',', $data['permissions']);
         $updated = Permissions::where('id', $id)->update($data);
         $role = Permissions::find($id);
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Permission Data updated successfully.',
-                'data' => $role
-            ], 200);
+            return redirect()->route('permissions');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update Permission Data.'
-            ], 500);
+            return redirect()->route('permissions');
         }
     }
 
@@ -85,13 +88,7 @@ class PermissionsController extends Controller
     {
         
         Permissions::where('id', $id)->delete();
-
-        return response()->json([
-            'success' => true, 
-            'message' => 'Permission deleted successfully.', 
-
-        ], 
-        200); 
+        return redirect()->route('permissions');
     
     }
 }

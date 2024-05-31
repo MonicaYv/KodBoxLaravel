@@ -87,7 +87,7 @@
                 </li>
                 <li class="flex items-center gap-5 mb-4">
                   <i class="ri-user-line"></i>
-                  <a href="{{ route('users') }}">User manage</a>
+                  <a href="{{ route('useradmin') }}">User manage</a>
                 </li>
                 <li class="flex items-center gap-5 mb-4">
                   <i class="ri-apps-fill"></i>

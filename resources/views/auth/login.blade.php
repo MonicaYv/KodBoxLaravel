@@ -14,7 +14,28 @@
 
   </head>
   <body>
-    <div class="login-screen w-full h-screen flex items-center justify-center gap-2">
+    <div class="login-screen w-full h-screen flex items-center justify-center gap-2 relative">
+
+       @error('email')
+                                    <!-- <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span> -->
+                                    <div id="toast-danger" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 absolute right-0 bottom-0" role="alert">
+                                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+                                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
+                                        </svg>
+                                        <span class="sr-only">Error icon</span>
+                                    </div>
+                                    <div class="ms-3 text-sm font-normal">These credentials do not match our records.</div>
+                                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-danger" aria-label="Close">
+                                        <span class="sr-only">Close</span>
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                    </button>
+                                </div>
+        @enderror
         <div class="left-background w-1/2 h-full bg-no-repeat bg-cover bg-center">
             <div class="login-container w-10/12 h-max rounded-2xl lg:w-2/5 md:w-4/5">
               <div class="logo flex items-center justify-center p-4">
@@ -36,11 +57,7 @@
 
                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                
                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
@@ -50,12 +67,12 @@
                                 @enderror
                   <div class="flex items-center w-5 gap-1">
                     <!--<input class="mt-3" type="checkbox">-->
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <input class="mt-3" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <p>Rememeber</p>
                     <p>me</p>
                   </div>
                   <!--<input id="login-btn" type="button" value="Login">-->
-                  <input type="submit" value="Login">
+                  <input id="login-btn" type="submit" value="Login">
                                     {{ __('') }}
                  </input>
 
@@ -96,6 +113,16 @@
           // Please sync "Login- Password" to the project
         });
       }
+
+//   toast dismiss
+      document.querySelectorAll('[data-dismiss-target]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var target = document.querySelector(button.getAttribute('data-dismiss-target'));
+            if (target) {
+                target.style.display = 'none';
+            }
+        });
+    });
       </script>
   </body>
 </html>
