@@ -1,0 +1,50 @@
+.login-screen{
+  position: relative;
+}
+
+.left-background{
+background-image: url('/images/Wallpaper.png');
+border-top-right-radius: 100px;
+
+}
+
+.right-background{
+background-image: url('/images/Wallpaper.png');
+border-top-left-radius: 100px;
+}
+
+.login-container{
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background-color: rgba(229, 224, 224, 0.292);
+    backdrop-filter: blur(20px);
+    height: 500px;
+}
+
+.vector-img{
+  position: absolute;
+  z-index: -1;
+}
+
+.right-container input{
+  padding: 4px;
+  width: 100%;
+  margin-bottom: 10px;
+  outline: none;
+  border-radius: 10px;
+  background-color: rgb(142, 140, 140);
+  color: black;
+}
+
+#login-btn{
+  background-color: black;
+  color: white;
+  margin-top: 10px;
+}
+
+input::placeholder {
+  color: #000;
+}
+

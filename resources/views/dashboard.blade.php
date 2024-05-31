@@ -32,6 +32,10 @@
           <i class="ri-volume-up-line text-white text-2xl"></i>
           <i class="ri-battery-fill text-white text-2xl"></i>
         </div>
+
+          <div class="desktop-apps w-0 gap-5 flex flex-col flex-wrap p-5">
+        
+        </div>
         <div class="clock" id="clock"></div>
         <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 float-right" role="alert">
     <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
@@ -224,7 +228,7 @@
       footerButton.addEventListener("mouseleave", function () {
         tooltip.style.display = "none";
       });
-
+      
       //for dimissing toast
        document.querySelectorAll('[data-dismiss-target]').forEach(function(button) {
         button.addEventListener('click', function() {
@@ -234,6 +238,86 @@
             }
         });
     });
+
+        const container = document.querySelector(".desktop-apps");
+      const Desktopapps = [
+    {
+        "id":1,
+        "name":"Operation log",
+        "image":"{{ asset('images/operationotes.png') }}",
+
+        "url":""
+      },{
+        "id":2,
+        "name":"Light App",
+        "image":"{{ asset('images/lightapp.png') }}",
+        "url":"{{url('/list')}}"
+      },{
+        "id":3,
+        "name":"My Albums",
+        "image":"{{ asset('images/album.png') }}",
+        "url":""
+      },{
+        "id":4,
+        "name":"PPT",
+        "image":"{{ asset('images/pptx.png') }}",
+        "url":"https://snappy.sizaf.com/example/editor?fileName=new.pptx&userid=uid-1&lang=en&directUrl=false"
+      },{
+        
+        "id":5,
+        "name":"Excel",
+        "image":"{{ asset('images/xlsx.png') }}",
+        "url":"https://snappy.sizaf.com/example/editor?fileName=new.xlsx&userid=uid-1&lang=en&directUrl=false"
+      },{
+        "id":6,
+        "name":"Help",
+        "image":"{{ asset('images/about.png') }}",
+        "url":""
+      },{
+        "id":7,
+        "name":"iCloud",
+        "image":"{{ asset('images/icloud.png') }}",
+        "url":"https://www.icloud.com"
+      },{
+        "id":8,
+        "name":"Dots ERP",
+        "image":"images/ERPNext.png",
+        "url":"http://erp.sizaf.com/app"
+      },{
+        "id":9,
+        "name":"Dots Chat",
+        "image":"images/logo-dots-chat.png",
+        "url":"https://zulip.sizaf.com/"
+      },{
+        "id":10,
+        "name":"Word",
+        "image":"images/docx.png",
+        "url":"https://snappy.sizaf.com/example/editor?fileName=new.docx&userid=uid-1&lang=en&directUrl=false"
+      },{
+         "id":11,
+        "name":"Open Social App",
+        "image":"images/opensociallogo.png",
+        "url":"https://social.sizaf.com/html/user/login"
+      }
+    ]
+      
+    const Showapps = Desktopapps.map((app)=>{
+      
+      return(
+        `<div class="w-20 h-24 flex flex-col items-center cursor-pointer text-center">
+        <a href="${app.url}"> 
+          <img class="w-16 h-16" src=${app.image} alt=${app.name}/></a>
+           <h2 class="text-white text-lg">${app.name}</h2>
+           </div>`
+      )
+    })
+
+    console.log(Showapps)
+    container.innerHTML = Showapps
+
+
+
+      
     </script>
   </body>
 </html>

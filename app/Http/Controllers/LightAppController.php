@@ -16,14 +16,11 @@ class LightAppController extends Controller
      */
     public function index()
     {
+       
        $app = LiteAppModel::get();
 
-        return response()->json([
-            'success' => true, 
-            'message' => 'All Apps List',
-            'data' => $app
-        ], 
-        200);
+       return view('lightApp.list', compact('app'));
+
     }
 
 
@@ -44,17 +41,19 @@ class LightAppController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function add_form()
     {
-        //
+       
+        return view('lightApp.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function add_data(Request $request)
     {
-     // dd($request->all()); 
+
+     
          $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:1|max:100',
             'website_link' => 'required|string|min:1|max:100',
@@ -96,7 +95,7 @@ class LightAppController extends Controller
 
         $appData = LiteAppModel::create($data);
 
-        return response()->json(['message' => 'App data stored successfully', 'data' => $appData], 201);
+       return view('lightApp.list');
     }
 
     /**

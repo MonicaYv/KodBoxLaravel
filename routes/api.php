@@ -22,17 +22,10 @@ Route::controller(RegisterController::class)->group(function(){
 
 });
 
-//Auth::routes();
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+	
 
 Route::middleware('auth:sanctum')->group( function () {
-	Route::resource('apps', LightAppController::class);
-	Route::get('app_role_list', [LightAppController::class, 'AppRoleList']);
-	Route::post('apps-update/{id}', [LightAppController::class, 'update']);
-	Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
-	Route::get('users_details/{id}', [RegisterController::class, 'userDetails']);
+
 
    //Roles routes
 	Route::get('role-list', [RolesController::class, 'index']);
@@ -46,6 +39,14 @@ Route::middleware('auth:sanctum')->group( function () {
 	Route::post('permission-create', [PermissionsController::class, 'create']);
 	Route::post('permission-update/{id}', [PermissionsController::class, 'update']);
 	Route::get('permission-delete/{id}', [PermissionsController::class, 'destroy']);
+
+
+
+//Light apps
+    Route::resource('apps', LightAppController::class);
+	Route::get('app_role_list', [LightAppController::class, 'AppRoleList']);
+	Route::post('apps-update/{id}', [LightAppController::class, 'update']);
+	Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
 
 });
 
