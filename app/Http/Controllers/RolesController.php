@@ -10,6 +10,11 @@ use Illuminate\Http\JsonResponse;
 
 class RolesController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the roles.
      */
@@ -17,28 +22,36 @@ class RolesController extends Controller
     {
        if($id){
         $role = Roles::find($id);
-        return response()->json([
-                'success' => true, 
-                'message' => 'Role List',
-                'data' => $role
-            ], 
-            200);
+        return view('roles.index',compact('role'));
 
        }else{
-           $roles = Roles::get();
-
-            return response()->json([
-                'success' => true, 
-                'message' => 'Roles List',
-                'data' => $roles
-            ], 
-            200);
+        $roles = Roles::get();
+        return view('roles.index',compact('roles'));
         }
+    }
+
+    public function roles()
+    {
+        $roles = Roles::get();
+        $roles = json_encode($roles);
+        return view('roles.roles',compact('roles'));
+    }
+
+    public function add()
+    {
+       return view('roles.add');
+    }
+
+    public function edit(string $id)
+    {
+       $role = Roles::find($id);
+       $role->file_manage_settings = explode(",", $role->file_manage_settings);
+       $role->user_settings = explode(",", $role->user_settings);
+       return view('roles.edit',compact('role'));
     }
 
     public function create(Request $request)
     {
-
          $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -48,36 +61,31 @@ class RolesController extends Controller
         }
 
         $input = $request->all();
+        $input['file_manage_settings'] = implode(',', $input['file_manage_settings']);
+        $input['user_settings'] = implode(',', $input['user_settings']);
         $role = Roles::create($input);
-        return response()->json([
-            'success' => true, 
-            'message' => 'Role Created successfully',
-            'data' => $role
-        ], 
-        200);   
+         return redirect()->route('roles');
+           
     }
 
      public function update(Request $request, string $id)
     {
 
        // Access and prepare data from the request
-        $data = $request->all();
+        $data = request()->except(['_token']);
+        if(!empty($data['file_manage_settings']))
+        $data['file_manage_settings'] = implode(',', $data['file_manage_settings']);
+        if(!empty($data['user_settings']))
+        $data['user_settings'] = implode(',', $data['user_settings']);
 
         $updated = Roles::where('id', $id)->update($data);
         $role = Roles::find($id);
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Roles Data updated successfully.',
-                'data' => $role
-            ], 200);
+            return redirect()->route('roles');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update Roles Data.'
-            ], 500);
+            return redirect()->route('roles');
         }
     }
 
@@ -85,13 +93,8 @@ class RolesController extends Controller
     {
         
         Roles::where('id', $id)->delete();
-
-        return response()->json([
-            'success' => true, 
-            'message' => 'Role deleted successfully.', 
-
-        ], 
-        200); 
+        return redirect()->route('roles');
+         
     
     }
 }

@@ -3,13 +3,13 @@
 }
 
 .left-background{
-background-image: url('http://127.0.0.1:8000/images/Wallpaper.png');
+background-image: url('/images/Wallpaper.png');
 border-top-right-radius: 100px;
 
 }
 
 .right-background{
-background-image: url('http://127.0.0.1:8000/images/Wallpaper.png');
+background-image: url('/images/Wallpaper.png');
 border-top-left-radius: 100px;
 }
 
@@ -62,7 +62,7 @@ body {
 
 :root {
 /*images */
---desktop-background:url('http://127.0.0.1:8000/images/Wallpaper.png');
+--desktop-background:url('/images/Wallpaper.png');
 
   /* fonts */
   --font-roboto: Roboto;
@@ -115,7 +115,7 @@ body {
 /* Dashboard */
 
 .dashboard {
-  background-image: url("http://127.0.0.1:8000/images/Wallpaper.png");
+  background-image: url("/images/Wallpaper.png");
   background-size: 100% 100%;
   position: relative;
 }
