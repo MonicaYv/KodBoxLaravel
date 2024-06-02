@@ -24,18 +24,13 @@ class LightAppController extends Controller
     }
 
 
- public function AppRoleList(Request $request)
+ public function AppRoleList(Request $request, $type)
 
     {
        
-     $app = LiteAppModel::where('app_group',$request->app_group)->get();
-
-     return response()->json([
-        'success' => true, 
-        'message' => 'App List Of Your Role.',
-        'data' => $app
-    ], 
-    200);
+     $app = LiteAppModel::where('app_group',$type)->get();
+    
+     return view('lightApp.list', ['app' => $app]);
 
  }
     /**
@@ -76,7 +71,7 @@ class LightAppController extends Controller
             500);
         }
 
-
+        
         $image = $request->file('picture_icon');
         $path = $image->store('images', 'public');
 
@@ -95,7 +90,8 @@ class LightAppController extends Controller
 
         $appData = LiteAppModel::create($data);
 
-       return view('lightApp.list');
+       return redirect('list')->with('success', 'Data successfully.');
+
     }
 
     /**
@@ -123,17 +119,10 @@ class LightAppController extends Controller
         $updated = LiteAppModel::where('id', $id)->update($data);
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-                'message' => 'App added to Desktop successfully.',
-                'data' => $data
-            ], 200);
+             return view('lightApp.list');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update app.'
-            ], 500);
+             return view('lightApp.list');
         }
     }
 
@@ -176,34 +165,22 @@ class LightAppController extends Controller
         $updated = LiteAppModel::where('id', $id)->update($data);
 
         if ($updated) {
-            return response()->json([
-                'success' => true,
-                'message' => 'App updated successfully.',
-                'data' => $data
-            ], 200);
+             return view('lightApp.list');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update app.'
-            ], 500);
+            return view('lightApp.list');
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete_data(string $id)
     {
         
         LiteAppModel::where('id', $id)->delete();
 
-        return response()->json([
-            'success' => true, 
-            'message' => 'App deleted successfully.', 
-
-        ], 
-                                200);  //
+       return redirect('list')->with('success', 'Data Deleted successfully.');
     
     }
 

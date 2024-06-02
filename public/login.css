@@ -26,6 +26,7 @@ border-top-left-radius: 100px;
 .vector-img{
   position: absolute;
   z-index: -1;
+  color: rgb(217, 147, 16);
 }
 
 .right-container input{
@@ -47,4 +48,5 @@ border-top-left-radius: 100px;
 input::placeholder {
   color: #000;
 }
+
 
