@@ -35,7 +35,9 @@ class UserController extends Controller
     {
         $users = User::get();
         $users = json_encode($users);
-        return view('users.users',compact('users'));
+        $groups = Group::get();
+        $roles = Roles::get();
+        return view('users.users',compact('users','groups','roles'));
     }
 
     public function userAdmin()
@@ -66,7 +68,7 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        return redirect()->route('users');  
+        return redirect()->route('usergroups');  
     }
 
     public function edit(string $id)

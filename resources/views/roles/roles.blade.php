@@ -272,9 +272,8 @@
             searchInput.addEventListener('input', function () {
                 const searchTerm = searchInput.value.toLowerCase();
                 const filteredData = tableData.filter(row =>
-                    row.nickname.toLowerCase().includes(searchTerm) ||
-                    row.role.toLowerCase().includes(searchTerm) ||
-                    row.group.toLowerCase().includes(searchTerm)
+                    row.name.toLowerCase().includes(searchTerm) ||
+                    row.description.toLowerCase().includes(searchTerm)
                 );
                 populateTable(filteredData);
             });
